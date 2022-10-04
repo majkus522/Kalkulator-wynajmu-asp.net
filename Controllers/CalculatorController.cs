@@ -7,75 +7,75 @@ namespace KalkulatorWynajmu.Controllers
 {
 	public enum CarClass
 	{
-		Basic, Standard, Medium, Premium
+		Basic = 10, Standard = 13, Medium = 16, Premium = 20
 	}
 
 	[Route("api/kalkulator")]
 	[ApiController]
 	public class KalkulatorWynajmu : ControllerBase
 	{
-		private readonly ILogger<KalkulatorWynajmu> _logger;
-
-		public KalkulatorWynajmu(ILogger<KalkulatorWynajmu> logger)
-		{
-			_logger = logger;
-		}
+		public KalkulatorWynajmu(ILogger<KalkulatorWynajmu> logger) { }
 
 		[HttpGet]
-		public IActionResult Get([FromQuery] int distance, [FromQuery] int year, [FromQuery] DateTime start, [FromQuery] DateTime end, [FromQuery] CarClass carClass)
+		public ActionResult<string> Get([FromQuery] int distance, [FromQuery] int year, [FromQuery] DateTime start, [FromQuery] DateTime end, [FromQuery] CarClass carClass)
 		{
-			DateTime today = DateTime.Today;
-			float fuelPrice = 6.96f;
-			float basePrice = 40;
-			float fuelConsumption = 7.5f;
-			int modelAvaliable = 1;
-
-			int days = end.Subtract(start).Days;
-			float daysCost = basePrice * days;
-			float finalResult = daysCost;
-
-			float carClassCost = 0;
-			switch (carClass)
+			var today = DateTime.Today;
+			if (today > start)
 			{
-				case CarClass.Standard:
-					carClassCost = .3f * daysCost;
-					break;
-
-				case CarClass.Medium:
-					carClassCost = .6f * daysCost;
-					break;
-
-				case CarClass.Premium:
-					carClassCost = daysCost;
-					break;
+				return BadRequest("Niepoprawna data rozpoczęcia wynajmu");
 			}
-			finalResult += carClassCost;
+			if (today > end || end < start)
+			{
+				return BadRequest("Niepoprawna data zakończenia wynajmu");
+			}
+			if (distance < 0)
+			{
+				return BadRequest("Niepoprawna odległość");
+			}
+			if (year < 1900)
+			{
+				return BadRequest("Niepoprawny rok wydania prawa jazdy");
+			}
 
-			float expirienceCost = 0;
+			var fuelPrice = 6.96f;
+			var basePrice = 40.0f;
+			var fuelConsumption = 7.5f;
+			var modelAvaliable = 1;
+
+			if (today.Year - year < 3 && carClass == CarClass.Premium)
+				return BadRequest("Nie możesz wyporzyczyć tego pojazdu");
+
+			var days = end.Subtract(start).Days;
+			var daysCost = basePrice * days;
+			string placeholder = "Cena bazowa (" + days + " " + (days == 1 ? "dzień" : "dni") + "):\t\t" + daysCost + " zł\r\n";
+			var finalResult = daysCost;
+
+			var carClassCost = daysCost * ((int)carClass) / 10;
+			finalResult += carClassCost;
+			placeholder += "Cena klasy pojazdu:\t\t\t" + carClassCost + " zł\r\n";
+
 			if (today.Year - year < 5)
 			{
-				expirienceCost = .2f * finalResult;
+				var expirienceCost = .2f * finalResult;
+				placeholder += "Niedoświadczony kierowca:\t" + expirienceCost + " zł\r\n";
 				finalResult += expirienceCost;
 			}
 
-			float modelCountCost = 0;
 			if (modelAvaliable < 3)
 			{
-				modelCountCost = .15f * finalResult;
+				var modelCountCost = .15f * finalResult;
+				placeholder += "Mała ilośc pojazdów:\t\t" + modelCountCost + " zł\r\n";
 				finalResult += modelCountCost;
 			}
 
-			float fuelCost = distance / 100 * fuelConsumption * fuelPrice;
+			var fuelCost = distance / 100 * fuelConsumption * fuelPrice;
+			placeholder += "Cena paliwa:\t\t\t\t" + fuelCost + " zł\r\n";
 			finalResult += fuelCost;
 
-			return new JsonResult(new Dictionary<string, float>()
-			{
-				{ "baseCost", daysCost},
-				{ "expirienceCost", expirienceCost},
-				{ "modelCountCost", modelCountCost},
-				{ "fuelCost", fuelCost},
-				{ "sum", finalResult}
-			});
+			placeholder += "---------------------------------------\r\n";
+			placeholder += "Razem:\t\t\t\t\t\t" + finalResult + " zł";
+
+			return Ok(placeholder);
 		}
 	}
 }
