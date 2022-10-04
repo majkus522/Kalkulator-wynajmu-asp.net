@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using KalkulatorWynajmu.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -15,6 +16,13 @@ namespace KalkulatorWynajmu.Controllers
 	[ApiController]
 	public class KalkulatorWynajmu : ControllerBase
 	{
+		DatabaseController controller;
+
+		public KalkulatorWynajmu(DatabaseController controller)
+		{
+			this.controller = controller;
+		}
+
 		[HttpGet]
 		public ActionResult<string> Get([FromQuery] InputData data)
 		{
