@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace KalkulatorWynajmu
 {
-	[BindProperties]
 	public class InputData
 	{
-		public int distance { get; set; }
-		public int year { get; set; }
-		public DateTime start { get; set; }
-		public DateTime end { get; set; }
+		public int Distance { get; set; }
+		public int Year { get; set; }
+		public DateTime Start { get; set; }
+		public DateTime End { get; set; }
 	}
 }

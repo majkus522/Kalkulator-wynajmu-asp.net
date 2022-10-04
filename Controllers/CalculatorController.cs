@@ -11,8 +11,7 @@ namespace KalkulatorWynajmu.Controllers
 		Basic = 10, Standard = 13, Medium = 16, Premium = 20
 	}
 
-
-[Route("api/kalkulator")]
+	[Route("api/kalkulator")]
 	[ApiController]
 	public class KalkulatorWynajmu : ControllerBase
 	{
@@ -20,20 +19,20 @@ namespace KalkulatorWynajmu.Controllers
 		public ActionResult<string> Get([FromQuery] InputData data)
 		{
 			var today = DateTime.Today;
-			CarClass carClass = CarClass.Basic;
-			if (today > data.start)
+			var carClass = CarClass.Basic;
+			if (today > data.Start)
 			{
 				return BadRequest("Niepoprawna data rozpoczęcia wynajmu");
 			}
-			if (today > data.end || data.end < data.start)
+			if (today > data.End || data.End < data.Start)
 			{
 				return BadRequest("Niepoprawna data zakończenia wynajmu");
 			}
-			if (data.distance < 0)
+			if (data.Distance < 0)
 			{
 				return BadRequest("Niepoprawna odległość");
 			}
-			if (data.year < 1900)
+			if (data.Year < 1900)
 			{
 				return BadRequest("Niepoprawny rok wydania prawa jazdy");
 			}
@@ -43,10 +42,10 @@ namespace KalkulatorWynajmu.Controllers
 			var fuelConsumption = 7.5f;
 			var modelAvaliable = 1;
 
-			if (today.Year - data.year < 3 && carClass == CarClass.Premium)
+			if (today.Year - data.Year < 3 && carClass == CarClass.Premium)
 				return BadRequest("Nie możesz wyporzyczyć tego pojazdu");
 
-			var days = data.end.Subtract(data.start).Days;
+			var days = data.End.Subtract(data.Start).Days;
 			var daysCost = basePrice * days;
 			string placeholder = "Cena bazowa (" + days + " " + (days == 1 ? "dzień" : "dni") + "): " + daysCost + " zł\r\n";
 			var finalResult = daysCost;
@@ -55,7 +54,7 @@ namespace KalkulatorWynajmu.Controllers
 			finalResult += carClassCost;
 			placeholder += "Cena klasy pojazdu: " + carClassCost + " zł\r\n";
 
-			if (today.Year - data.year < 5)
+			if (today.Year - data.Year < 5)
 			{
 				var expirienceCost = .2f * finalResult;
 				placeholder += "Niedoświadczony kierowca: " + expirienceCost + " zł\r\n";
@@ -69,7 +68,7 @@ namespace KalkulatorWynajmu.Controllers
 				finalResult += modelCountCost;
 			}
 
-			var fuelCost = data.distance / 100 * fuelConsumption * fuelPrice;
+			var fuelCost = data.Distance / 100 * fuelConsumption * fuelPrice;
 			placeholder += "Cena paliwa: " + fuelCost + " zł\r\n";
 			finalResult += fuelCost;
 
