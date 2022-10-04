@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KalkulatorWynajmu
 {
-	public class InputData
+	public record InputData
 	{
 		public int Distance { get; set; }
 		public int Year { get; set; }
