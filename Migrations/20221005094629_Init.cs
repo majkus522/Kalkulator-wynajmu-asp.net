@@ -23,6 +23,21 @@ namespace KalkulatorWynajmu.Migrations
                 {
                     table.PrimaryKey("PK_cars", x => x.Id);
                 });
+
+            migrationBuilder.InsertData(
+                table: "cars",
+                columns: new[] { "Id", "basePrice", "brand", "carAvaliable", "carClass", "fuelConsumption", "model" },
+                values: new object[] { 1, 36.99f, "Skoda", 10, 13, 5.81f, "KAMIQ" });
+
+            migrationBuilder.InsertData(
+                table: "cars",
+                columns: new[] { "Id", "basePrice", "brand", "carAvaliable", "carClass", "fuelConsumption", "model" },
+                values: new object[] { 2, 69.99f, "BMW", 1, 20, 10.4f, "M3 TOURING" });
+
+            migrationBuilder.InsertData(
+                table: "cars",
+                columns: new[] { "Id", "basePrice", "brand", "carAvaliable", "carClass", "fuelConsumption", "model" },
+                values: new object[] { 3, 45.99f, "Audi", 1, 16, 5.6f, "A1 Sportback" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

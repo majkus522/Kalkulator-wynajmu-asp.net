@@ -3,6 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using KalkulatorWynajmu.Entities;
 
 public enum CarClass
 {
@@ -22,8 +30,21 @@ namespace KalkulatorWynajmu.Controllers
 			_context = context;
 		}
 
+		[HttpGet]
+		public async Task<ActionResult<IEnumerable<Car>>> getCars()
+		{
+			var placeholder = "Dostępne samochody:";
+			int index = 1;
+			foreach (Car car in await _context.cars.ToListAsync())
+            {
+				placeholder += "\r\n" + index + ". " + car.brand + " " + car.model;
+				index++;
+            }
+			return Ok(placeholder);
+		}
+
 		[HttpGet("{id}")]
-		public async Task<ActionResult<IEnumerable<Car>>> Get(int id, [FromQuery] InputData data)
+		public async Task<ActionResult<IEnumerable<Car>>> get(int id, [FromQuery] InputData data)
 		{
 			var placeholder = "";
 			var car = await _context.cars.FindAsync(id);
