@@ -9,5 +9,10 @@
 		public float basePrice { get; set; }
 		public float fuelConsumption { get; set; }
 		public CarClass carClass { get; set; }
+
+		public override string ToString()
+		{
+			return Id + ";" + brand + ";" + model + ";" + carAvaliable + ";" + basePrice + ";" + fuelConsumption + ";" + carClass;
+		}
 	}
 }

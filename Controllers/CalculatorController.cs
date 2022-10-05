@@ -3,14 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using KalkulatorWynajmu.Entities;
 
 public enum CarClass
 {
@@ -36,10 +30,10 @@ namespace KalkulatorWynajmu.Controllers
 			var placeholder = "Dostępne samochody:";
 			int index = 1;
 			foreach (Car car in await _context.cars.ToListAsync())
-            {
+			{
 				placeholder += "\r\n" + index + ". " + car.brand + " " + car.model;
 				index++;
-            }
+			}
 			return Ok(placeholder);
 		}
 
@@ -105,6 +99,50 @@ namespace KalkulatorWynajmu.Controllers
 			placeholder += "Razem: " + Math.Round(finalResult, 2) + " zł";
 
 			return Ok(placeholder);
+		}
+
+		[HttpPut("{id}")]
+		public async Task<IActionResult> put(int id, Car car)
+		{
+			if (id != car.Id)
+			{
+				return BadRequest();
+			}
+
+			_context.Entry(car).State = EntityState.Modified;
+
+			try
+			{
+				await _context.SaveChangesAsync();
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				if (!CarExists(id))
+				{
+					return NotFound("found");
+				}
+				else
+				{
+					throw;
+				}
+			}
+
+			return NoContent();
+		}
+
+		[HttpPost]
+		[ActionName(nameof(PostCar))]
+		public async Task<ActionResult<Car>> PostCar(Car car)
+		{
+			_context.cars.Add(car);
+			await _context.SaveChangesAsync();
+
+			return CreatedAtAction(nameof(PostCar), new { id = car.Id }, car);
+		}
+
+		bool CarExists(int id)
+		{
+			return _context.cars.Any(e => e.Id == id);
 		}
 	}
 }
