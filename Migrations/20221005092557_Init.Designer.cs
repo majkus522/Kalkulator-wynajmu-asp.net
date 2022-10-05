@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KalkulatorWynajmu.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221005080910_Init")]
+    [Migration("20221005092557_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,38 +48,6 @@ namespace KalkulatorWynajmu.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("cars");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            basePrice = 36.99f,
-                            brand = "Skoda",
-                            carAvaliable = 10,
-                            carClass = 13,
-                            fuelConsumption = 5.81f,
-                            model = "KAMIQ"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            basePrice = 69.99f,
-                            brand = "BMW",
-                            carAvaliable = 1,
-                            carClass = 20,
-                            fuelConsumption = 10.4f,
-                            model = "M3 TOURING"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            basePrice = 45.99f,
-                            brand = "Audi",
-                            carAvaliable = 1,
-                            carClass = 16,
-                            fuelConsumption = 5.6f,
-                            model = "A1 Sportback"
-                        });
                 });
 #pragma warning restore 612, 618
         }

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace KalkulatorWynajmu
 {
-    public class Startup
+	public class Startup
 	{
 		public Startup(IConfiguration configuration)
 		{
