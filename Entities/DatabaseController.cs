@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace KalkulatorWynajmu.Entities
 {
-	public class DatabaseController : DbContext
+	public class DatabaseContext : DbContext
 	{
-		public DbSet<Car> cars;
+		public DbSet<Car> cars { get; set; }
 
 		string connection = "Server=(localdb)\\mssqllocaldb;Database=CrasDB;Trusted_Connection=True;";
 
+		public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<Car>().Property(r => r.brand).IsRequired();
-			modelBuilder.Entity<Car>().Property(r => r.model).IsRequired();
-
 			modelBuilder.Entity<Car>().HasData(new Car[]
 			{
 				new Car()
@@ -27,7 +22,7 @@ namespace KalkulatorWynajmu.Entities
 					carAvaliable = 10,
 					basePrice = 36.99f,
 					fuelConsumption = 5.81f,
-					carClass = Controllers.CarClass.Standard
+					carClass = CarClass.Standard
 				},
 				new Car()
 				{
@@ -37,7 +32,7 @@ namespace KalkulatorWynajmu.Entities
 					carAvaliable = 1,
 					basePrice = 69.99f,
 					fuelConsumption = 10.4f,
-					carClass = Controllers.CarClass.Premium
+					carClass = CarClass.Premium
 				},
 				new Car()
 				{
@@ -47,7 +42,7 @@ namespace KalkulatorWynajmu.Entities
 					carAvaliable = 1,
 					basePrice = 45.99f,
 					fuelConsumption = 5.6f,
-					carClass = Controllers.CarClass.Medium
+					carClass = CarClass.Medium
 				}
 			});
 		}
