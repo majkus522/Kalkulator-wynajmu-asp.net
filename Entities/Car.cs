@@ -8,7 +8,7 @@
 		public int carAvaliable { get; set; }
 		public float basePrice { get; set; }
 		public float fuelConsumption { get; set; }
-		public CarClass carClass { get; set; }
+		public CarClassE carClass { get; set; }
 
 		public override string ToString()
 		{

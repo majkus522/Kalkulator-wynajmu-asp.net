@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-public enum CarClass
+public enum CarClassE
 {
 	Basic = 10, Standard = 13, Medium = 16, Premium = 20
 }
@@ -29,7 +29,7 @@ namespace KalkulatorWynajmu.Controllers
 		{
 			var placeholder = "Dostępne samochody:";
 			int index = 1;
-			foreach (Car car in await _context.cars.ToListAsync())
+			foreach (Car car in await _context.Cars.ToListAsync())
 			{
 				placeholder += "\r\n" + index + ". " + car.brand + " " + car.model;
 				index++;
@@ -38,37 +38,37 @@ namespace KalkulatorWynajmu.Controllers
 		}
 
 		[HttpGet("{id}")]
-		public async Task<ActionResult<IEnumerable<Car>>> get(int id, [FromQuery] InputData data)
+		public async Task<ActionResult<IEnumerable<Car>>> get(int id, [FromQuery] InputData Data)
 		{
 			var placeholder = "";
-			var car = await _context.cars.FindAsync(id);
+			var car = await _context.Cars.FindAsync(id);
 			if (car == null)
 				return NotFound();
 			placeholder += car.brand + " " + car.model + "\r\n\r\n";
 			var today = DateTime.Today;
-			if (today > data.Start)
+			if (today > Data.Start)
 			{
 				return BadRequest("Niepoprawna data rozpoczęcia wynajmu");
 			}
-			if (today > data.End || data.End < data.Start)
+			if (today > Data.End || Data.End < Data.Start)
 			{
 				return BadRequest("Niepoprawna data zakończenia wynajmu");
 			}
-			if (data.Distance < 0)
+			if (Data.Distance < 0)
 			{
 				return BadRequest("Niepoprawna odległość");
 			}
-			if (data.Year < 1900)
+			if (Data.Year < 1900)
 			{
 				return BadRequest("Niepoprawny rok wydania prawa jazdy");
 			}
 
 			var fuelPrice = 6.96f;
 
-			if (today.Year - data.Year < 3 && car.carClass == CarClass.Premium)
+			if (today.Year - Data.Year < 3 && car.carClass == CarClassE.Premium)
 				return BadRequest("Nie możesz wyporzyczyć tego pojazdu");
 
-			var days = data.End.Subtract(data.Start).Days;
+			var days = Data.End.Subtract(Data.Start).Days;
 			var daysCost = car.basePrice * days;
 			placeholder += "Cena bazowa (" + days + " " + (days == 1 ? "dzień" : "dni") + "): " + Math.Round(daysCost, 2) + " zł\r\n";
 			var finalResult = daysCost;
@@ -77,7 +77,7 @@ namespace KalkulatorWynajmu.Controllers
 			finalResult += carClassCost;
 			placeholder += "Cena klasy pojazdu: " + Math.Round(carClassCost, 2) + " zł\r\n";
 
-			if (today.Year - data.Year < 5)
+			if (today.Year - Data.Year < 5)
 			{
 				var expirienceCost = .2f * finalResult;
 				placeholder += "Niedoświadczony kierowca: " + Math.Round(expirienceCost, 2) + " zł\r\n";
@@ -91,7 +91,7 @@ namespace KalkulatorWynajmu.Controllers
 				finalResult += modelCountCost;
 			}
 
-			var fuelCost = data.Distance / 100 * car.fuelConsumption * fuelPrice;
+			var fuelCost = Data.Distance / 100 * car.fuelConsumption * fuelPrice;
 			placeholder += "Cena paliwa: " + Math.Round(fuelCost, 2) + " zł\r\n";
 			finalResult += fuelCost;
 
@@ -134,7 +134,7 @@ namespace KalkulatorWynajmu.Controllers
 		[ActionName(nameof(PostCar))]
 		public async Task<ActionResult<Car>> PostCar(Car car)
 		{
-			_context.cars.Add(car);
+			_context.Cars.Add(car);
 			await _context.SaveChangesAsync();
 
 			return CreatedAtAction(nameof(PostCar), new { id = car.Id }, car);
@@ -142,7 +142,7 @@ namespace KalkulatorWynajmu.Controllers
 
 		bool CarExists(int id)
 		{
-			return _context.cars.Any(e => e.Id == id);
+			return _context.Cars.Any(e => e.Id == id);
 		}
 	}
 }

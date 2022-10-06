@@ -45,7 +45,7 @@ namespace KalkulatorWynajmu.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("cars");
+                    b.ToTable("Cars");
 
                     b.HasData(
                         new

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KalkulatorWynajmu.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221005123905_Init")]
+    [Migration("20221006071814_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,7 +47,7 @@ namespace KalkulatorWynajmu.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("cars");
+                    b.ToTable("Cars");
 
                     b.HasData(
                         new

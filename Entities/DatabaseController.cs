@@ -4,7 +4,7 @@ namespace KalkulatorWynajmu.Entities
 {
 	public class DatabaseContext : DbContext
 	{
-		public DbSet<Car> cars { get; set; }
+		public DbSet<Car> Cars { get; set; }
 
 		string connection = "Server=(localdb)\\mssqllocaldb;Database=CrasDB;Trusted_Connection=True;";
 
@@ -22,7 +22,7 @@ namespace KalkulatorWynajmu.Entities
 					carAvaliable = 10,
 					basePrice = 36.99f,
 					fuelConsumption = 5.81f,
-					carClass = CarClass.Standard
+					carClass = CarClassE.Standard
 				},
 				new Car()
 				{
@@ -32,7 +32,7 @@ namespace KalkulatorWynajmu.Entities
 					carAvaliable = 1,
 					basePrice = 69.99f,
 					fuelConsumption = 10.4f,
-					carClass = CarClass.Premium
+					carClass = CarClassE.Premium
 				},
 				new Car()
 				{
@@ -42,7 +42,7 @@ namespace KalkulatorWynajmu.Entities
 					carAvaliable = 1,
 					basePrice = 45.99f,
 					fuelConsumption = 5.6f,
-					carClass = CarClass.Medium
+					carClass = CarClassE.Medium
 				}
 			});
 		}

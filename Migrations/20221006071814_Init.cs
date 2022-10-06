@@ -7,7 +7,7 @@ namespace KalkulatorWynajmu.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "cars",
+                name: "Cars",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -21,21 +21,21 @@ namespace KalkulatorWynajmu.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_cars", x => x.Id);
+                    table.PrimaryKey("PK_Cars", x => x.Id);
                 });
 
             migrationBuilder.InsertData(
-                table: "cars",
+                table: "Cars",
                 columns: new[] { "Id", "basePrice", "brand", "carAvaliable", "carClass", "fuelConsumption", "model" },
                 values: new object[] { 1, 36.99f, "Skoda", 10, 13, 5.81f, "KAMIQ" });
 
             migrationBuilder.InsertData(
-                table: "cars",
+                table: "Cars",
                 columns: new[] { "Id", "basePrice", "brand", "carAvaliable", "carClass", "fuelConsumption", "model" },
                 values: new object[] { 2, 69.99f, "BMW", 1, 20, 10.4f, "M3 TOURING" });
 
             migrationBuilder.InsertData(
-                table: "cars",
+                table: "Cars",
                 columns: new[] { "Id", "basePrice", "brand", "carAvaliable", "carClass", "fuelConsumption", "model" },
                 values: new object[] { 3, 45.99f, "Audi", 1, 16, 5.6f, "A1 Sportback" });
         }
@@ -43,7 +43,7 @@ namespace KalkulatorWynajmu.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "cars");
+                name: "Cars");
         }
     }
 }
