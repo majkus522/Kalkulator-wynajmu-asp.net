@@ -10,6 +10,6 @@ namespace Domain
 		public int CarAvaliable { get; set; }
 		public float BasePrice { get; set; }
 		public float FuelConsumption { get; set; }
-		public ECarClass CarClass { get; set; }
+		public CarClassE CarClass { get; set; }
 	}
 }
