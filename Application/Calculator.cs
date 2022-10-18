@@ -35,7 +35,7 @@ namespace Application
 
 			var fuelPrice = 6.96f;
 
-			if (today.Year - Data.Year < 3 && car.CarClass == ECarClass.Premium)
+			if (today.Year - Data.Year < 3 && car.CarClass == CarClassE.Premium)
 				return new Result(400, "Nie możesz wyporzyczyć tego pojazdu");
 
 			var days = Data.End.Subtract(Data.Start).Days;
