@@ -24,7 +24,7 @@ namespace DataAcces
 					CarAvaliable = 10,
 					BasePrice = 36.99f,
 					FuelConsumption = 5.81f,
-					CarClass = ECarClass.Standard
+					CarClass = CarClassE.Standard
 				},
 				new Car()
 				{
@@ -34,7 +34,7 @@ namespace DataAcces
 					CarAvaliable = 1,
 					BasePrice = 69.99f,
 					FuelConsumption = 10.4f,
-					CarClass = ECarClass.Premium
+					CarClass = CarClassE.Premium
 				},
 				new Car()
 				{
@@ -44,7 +44,7 @@ namespace DataAcces
 					CarAvaliable = 1,
 					BasePrice = 45.99f,
 					FuelConsumption = 5.6f,
-					CarClass = ECarClass.Medium
+					CarClass = CarClassE.Medium
 				}
 			});
 		}

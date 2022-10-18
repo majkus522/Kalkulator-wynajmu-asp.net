@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
-
 namespace DataAcces.Migrations
 {
     public partial class Init : Migration
@@ -14,8 +12,8 @@ namespace DataAcces.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CarAvaliable = table.Column<int>(type: "int", nullable: false),
                     BasePrice = table.Column<float>(type: "real", nullable: false),
                     FuelConsumption = table.Column<float>(type: "real", nullable: false),
