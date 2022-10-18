@@ -27,7 +27,7 @@ namespace Application
 			return _context.Cars.SingleOrDefault(c => c.Id == id);
 		}
 
-		public List<Car> GetAll()
+		public ICollection<Car> GetAll()
 		{
 			return _context.Cars.ToList();
 		}

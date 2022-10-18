@@ -12,7 +12,7 @@ namespace Application
 			this.repository = repository;
 		}
 
-		public void AddReservation(InputData Data)
+		public void AddReservation(int distance, int year, DateTime start, DateTime end)
 		{
 
 		}
