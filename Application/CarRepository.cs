@@ -5,36 +5,36 @@ namespace Application
 {
 	public class CarRepository : ICarRepository
 	{
-		DatabaseContext context;
+		private readonly DatabaseContext _context;
 
 		public CarRepository(DatabaseContext context)
 		{
-			this.context = context;
+			_context = context;
 		}
 
-		public void add(Car car)
+		public void Add(Car car)
 		{
-			context.Cars.Add(car);
+			_context.Cars.Add(car);
 		}
 
-		public void delete(Car car)
+		public void Delete(Car car)
 		{
-			context.Cars.Remove(car);
+			_context.Cars.Remove(car);
 		}
 
-		public Car get(int id)
+		public Car Get(int id)
 		{
-			return context.Cars.Find(id);
+			return _context.Cars.SingleOrDefault(c => c.Id == id);
 		}
 
-		public List<Car> getAll()
+		public List<Car> GetAll()
 		{
-			return context.Cars.ToList();
+			return _context.Cars.ToList();
 		}
 
 		public void SaveChanges()
 		{
-			context.SaveChanges();
+			_context.SaveChanges();
 		}
 	}
 }
