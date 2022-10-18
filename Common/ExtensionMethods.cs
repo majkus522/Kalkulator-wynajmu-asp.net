@@ -2,20 +2,20 @@
 {
     public static class ExtensionMethods
 	{
-		public static float getValue(this ECarClass carClass)
+		public static float GetValue(this CarClassE carClass)
 		{
 			switch(carClass)
 			{
-				case ECarClass.Basic:
+				case CarClassE.Basic:
 					return 1f;
 
-				case ECarClass.Standard:
+				case CarClassE.Standard:
 					return 1.3f;
 
-				case ECarClass.Medium:
+				case CarClassE.Medium:
 					return 1.6f;
 
-				case ECarClass.Premium:
+				case CarClassE.Premium:
 					return 2f;
 			}
 			return 0;
