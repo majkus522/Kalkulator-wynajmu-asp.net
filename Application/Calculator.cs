@@ -3,9 +3,6 @@ using DataAcces;
 using Domain;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading.Tasks;
-using System.Linq;
 
 namespace Application
 {
@@ -38,7 +35,7 @@ namespace Application
 
 			var fuelPrice = 6.96f;
 
-			if (today.Year - Data.Year < 3 && car.CarClass == CarClassE.Premium)
+			if (today.Year - Data.Year < 3 && car.CarClass == ECarClass.Premium)
 				return new Result(400, "Nie możesz wyporzyczyć tego pojazdu");
 
 			var days = Data.End.Subtract(Data.Start).Days;
@@ -46,7 +43,7 @@ namespace Application
 			placeholder += "Cena bazowa (" + days + " " + (days == 1 ? "dzień" : "dni") + "): " + Math.Round(daysCost, 2) + " zł\r\n";
 			var finalResult = daysCost;
 
-			var carClassCost = daysCost * car.CarClass.GetValue() / 10;
+			var carClassCost = daysCost * car.CarClass.getValue() / 10;
 			finalResult += carClassCost;
 			placeholder += "Cena klasy pojazdu: " + Math.Round(carClassCost, 2) + " zł\r\n";
 
