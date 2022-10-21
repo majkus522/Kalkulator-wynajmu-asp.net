@@ -1,5 +1,6 @@
 ﻿using Domain;
 using DataAcces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application
 {
@@ -12,29 +13,29 @@ namespace Application
 			_context = context;
 		}
 
-		public void Add(Car car)
+		public async void Add(Car car)
 		{
 			_context.Cars.Add(car);
 		}
 
-		public void Delete(Car car)
+		public async void Delete(Car car)
 		{
 			_context.Cars.Remove(car);
 		}
 
-		public Car Get(int id)
+		public async Task<Car> Get(int id)
 		{
-			return _context.Cars.SingleOrDefault(c => c.Id == id);
+			return await _context.Cars.SingleOrDefaultAsync(c => c.Id == id);
 		}
 
-		public ICollection<Car> GetAll()
+		public async Task<ICollection<Car>> GetAll()
 		{
-			return _context.Cars.ToList();
+			return await _context.Cars.ToListAsync();
 		}
 
-		public void SaveChanges()
+		public async void SaveChanges()
 		{
-			_context.SaveChanges();
+			await _context.SaveChangesAsync();
 		}
 	}
 }
