@@ -8,10 +8,17 @@ namespace Application
 {
 	public class Calculator : ICalculator
 	{
-		public async Task<Result> get(int id, InputData Data, DatabaseContext context)
+		private readonly ICarRepository _carRepository;
+
+		public Calculator(ICarRepository carRepository)
+		{
+			_carRepository = carRepository;
+		}
+
+		public async Task<Result> get(int id, InputData Data)
 		{
 			var placeholder = "";
-			var car = await context.Cars.FindAsync(id);
+			var car = await _carRepository.Get(id);
 			if (car == null)
 				return new Result(404, "");
 			placeholder += car.Brand + " " + car.Model + "\r\n\r\n";
@@ -28,7 +35,7 @@ namespace Application
 			{
 				return new Result(400, "Niepoprawna odległość");
 			}
-			if (Data.Year < 1900)
+			if (Data.Year < 1950)
 			{
 				return new Result(400, "Niepoprawny rok wydania prawa jazdy");
 			}
@@ -71,11 +78,11 @@ namespace Application
 			return new Result(200, placeholder);
 		}
 
-		public async Task<Result> getCars(DatabaseContext context)
+		public async Task<Result> getCars()
 		{
 			var placeholder = "Dostępne samochody:";
 			int index = 1;
-			foreach (Car car in await context.Cars.ToListAsync())
+			foreach (Car car in await _carRepository.GetAll())
 			{
 				placeholder += "\r\n" + index + ". " + car.Brand + " " + car.Model;
 				index++;
@@ -83,28 +90,28 @@ namespace Application
 			return new Result(200, placeholder);
 		}
 
-		public async Task postCar(Car car, DatabaseContext context)
+		public async Task postCar(Car car)
 		{
-			context.Cars.Add(car);
-			await context.SaveChangesAsync();
+			await _carRepository.Add(car);
+			await _carRepository.SaveChanges();
 		}
 
-		public async Task<Result> put(int id, Car car, DatabaseContext context)
+		public async Task<Result> put(int id, Car car)
 		{
 			if (id != car.Id)
 			{
 				return new Result(400, "");
 			}
 
-			context.Entry(car).State = EntityState.Modified;
+			await _carRepository.Put(car);
 
 			try
 			{
-				await context.SaveChangesAsync();
+				await _carRepository.SaveChanges();
 			}
 			catch (DbUpdateConcurrencyException)
 			{
-				if (!CarExists(id, context))
+				if (!CarExists(id))
 				{
 					return new Result(404, "");
 				}
@@ -117,9 +124,9 @@ namespace Application
 			return new Result(204, "");
 		}
 
-		bool CarExists(int id, DatabaseContext context)
+		bool CarExists(int id)
 		{
-			return context.Cars.Any(e => e.Id == id);
+			return _carRepository.Get(id) != null;
 		}
 	}
 }

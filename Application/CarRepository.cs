@@ -13,19 +13,19 @@ namespace Application
 			_context = context;
 		}
 
-		public async void Add(Car car)
+		public async Task Add(Car car)
 		{
 			_context.Cars.Add(car);
 		}
 
-		public async void Delete(Car car)
+		public async Task Delete(Car car)
 		{
 			_context.Cars.Remove(car);
 		}
 
 		public async Task<Car> Get(int id)
 		{
-			return await _context.Cars.SingleOrDefaultAsync(c => c.Id == id);
+			return await _context.Cars.FirstOrDefaultAsync(c => c.Id == id);
 		}
 
 		public async Task<ICollection<Car>> GetAll()
@@ -33,7 +33,12 @@ namespace Application
 			return await _context.Cars.ToListAsync();
 		}
 
-		public async void SaveChanges()
+		public async Task Put(Car car)
+		{
+            _context.Entry(car).State = EntityState.Modified;
+        }
+
+		public async Task SaveChanges()
 		{
 			await _context.SaveChangesAsync();
 		}
