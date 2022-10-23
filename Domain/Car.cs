@@ -12,7 +12,7 @@ namespace Domain
 		public float FuelConsumption { get; set; }
 		public CarClassE CarClass { get; set; }
 
-		public Car(CarRequest request, int id)
+		public Car(AddCarRequest request, int id)
 		{
 			Id = id;
 			Brand = request.Brand;
@@ -22,5 +22,7 @@ namespace Domain
 			FuelConsumption = request.FuelConsumption;
 			CarClass = request.CarClass;
 		}
+
+		public Car() { }
 	}
 }

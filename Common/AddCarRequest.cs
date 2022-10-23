@@ -1,6 +1,6 @@
 ﻿namespace Common
 {
-	public class CarRequest
+	public class AddCarRequest
 	{
 		public string Brand { get; set; }
 		public string Model { get; set; }

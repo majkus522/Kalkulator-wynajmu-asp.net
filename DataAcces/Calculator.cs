@@ -1,7 +1,6 @@
 ﻿using Common;
 using Application;
 using Domain;
-using Infrastructure;
 
 namespace DataAcces
 {
@@ -89,7 +88,7 @@ namespace DataAcces
 			return new Result(200, result);
 		}
 
-		public async Task PostCar(CarRequest carRequest)
+		public async Task AddCar(AddCarRequest carRequest)
 		{
 			int maxId = 0;
 			foreach(Car car in await _carRepository.GetAll())

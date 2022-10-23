@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using DataAcces;
 using Domain;
-using Infrastructure;
 using Common;
+using Application;
 
 namespace API.Controllers
 {
@@ -42,10 +42,10 @@ namespace API.Controllers
 		}*/
 
 		[HttpPost]
-		public async Task<string> PostCar(CarRequest Car)
+		public async Task<ActionResult<Car>> AddCar(AddCarRequest Car)
 		{
-			await _calculator.PostCar(Car);
-			return "dodano car";
+			await _calculator.AddCar(Car);
+			return CreatedAtAction(nameof(AddCar), Car);
 		}
 	}
 }
