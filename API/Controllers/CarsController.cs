@@ -42,10 +42,10 @@ namespace API.Controllers
 		}*/
 
 		[HttpPost]
-		public async Task<ActionResult<Car>> AddCar(AddCarRequest Car)
+		public async Task<CreatedObject> AddCar(AddCarRequest Car)
 		{
 			var Id = await _calculator.AddCar(Car);
-			return CreatedAtAction(nameof(AddCar), new { id = Id }, Car);
+			return new CreatedObject(Id);
 		}
 	}
 }
