@@ -11,5 +11,16 @@ namespace Domain
 		public float BasePrice { get; set; }
 		public float FuelConsumption { get; set; }
 		public CarClassE CarClass { get; set; }
+
+		public Car(CarRequest request, int id)
+		{
+			Id = id;
+			Brand = request.Brand;
+			Model = request.Model;
+			CarAvaliable = request.CarAvaliable;
+			BasePrice = request.BasePrice;
+			FuelConsumption = request.FuelConsumption;
+			CarClass = request.CarClass;
+		}
 	}
 }

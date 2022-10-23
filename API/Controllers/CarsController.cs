@@ -3,7 +3,6 @@ using DataAcces;
 using Domain;
 using Infrastructure;
 using Common;
-using Application;
 
 namespace API.Controllers
 {
@@ -21,7 +20,7 @@ namespace API.Controllers
 		[HttpGet]
 		public async Task<string> GetCars()
 		{
-			var result = await _calculator.getCars();
+			var result = await _calculator.GetCars();
 			HttpContext.Response.StatusCode = result.code;
 			return result.content;
 		}
@@ -29,25 +28,24 @@ namespace API.Controllers
 		[HttpGet("{id}")]
 		public async Task<string> Get(int Id, [FromQuery] InputData Data)
 		{
-			var result = await _calculator.get(Id, Data);
+			var result = await _calculator.Get(Id, Data);
 			HttpContext.Response.StatusCode = result.code;
 			return result.content;
 		}
 
-		[HttpPut("{id}")]
+		/*[HttpPut("{id}")]
 		public async Task<string> Put(int Id, Car Car)
 		{
 			var result = await _calculator.put(Id, Car);
 			HttpContext.Response.StatusCode = result.code;
 			return result.content;
-		}
+		}*/
 
 		[HttpPost]
-		[ActionName(nameof(PostCar))]
-		public async Task<ActionResult<Car>> PostCar(Car Car)
+		public async Task<string> PostCar(CarRequest Car)
 		{
-			await _calculator.postCar(Car);
-			return CreatedAtAction(nameof(PostCar), new { id = Car.Id }, Car);
+			await _calculator.PostCar(Car);
+			return "dodano car";
 		}
 	}
 }

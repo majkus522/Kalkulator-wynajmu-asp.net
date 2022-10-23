@@ -1,7 +1,6 @@
-﻿using Common;
-using DataAcces;
+﻿using Application;
 
-namespace Application
+namespace DataAcces
 {
 	public class CarReservationService : ICarReservationService
 	{

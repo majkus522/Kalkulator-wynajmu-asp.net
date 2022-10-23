@@ -1,8 +1,8 @@
 ﻿using Domain;
-using DataAcces;
+using Application;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application
+namespace DataAcces
 {
 	public class CarRepository : ICarRepository
 	{
@@ -16,14 +16,16 @@ namespace Application
 		public async Task Add(Car car)
 		{
 			_context.Cars.Add(car);
+			await SaveChanges();
 		}
 
 		public async Task Delete(Car car)
 		{
 			_context.Cars.Remove(car);
+			await SaveChanges();
 		}
 
-		public async Task<Car> Get(int id)
+		public async Task<Car?> Get(int id)
 		{
 			return await _context.Cars.FirstOrDefaultAsync(c => c.Id == id);
 		}
@@ -32,11 +34,6 @@ namespace Application
 		{
 			return await _context.Cars.ToListAsync();
 		}
-
-		public async Task Put(Car car)
-		{
-            _context.Entry(car).State = EntityState.Modified;
-        }
 
 		public async Task SaveChanges()
 		{

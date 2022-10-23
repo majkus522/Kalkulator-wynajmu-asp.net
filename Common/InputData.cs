@@ -1,12 +1,4 @@
-﻿using System;
-
-namespace Common
+﻿namespace Common
 {
-    public record InputData
-	{
-		public int Distance { get; set; }
-		public int Year { get; set; }
-		public DateTime Start { get; set; }
-		public DateTime End { get; set; }
-	}
+	public record InputData (int Distance, int Year, DateTime Start, DateTime End);
 }
