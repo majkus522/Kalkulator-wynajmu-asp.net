@@ -1,7 +1,6 @@
-﻿using Common;
-using DataAcces;
+﻿using Application;
 
-namespace Application
+namespace DataAcces
 {
 	public class CarReservationService : ICarReservationService
 	{
@@ -12,7 +11,7 @@ namespace Application
 			this.repository = repository;
 		}
 
-		public void AddReservation(int distance, int year, DateTime start, DateTime end)
+		public async void AddReservation(int distance, int year, DateTime start, DateTime end)
 		{
 
 		}

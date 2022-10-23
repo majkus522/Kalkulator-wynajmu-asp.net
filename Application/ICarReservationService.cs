@@ -1,6 +1,6 @@
 ﻿using Common;
 
-namespace DataAcces
+namespace Application
 {
 	public interface ICarReservationService
 	{
