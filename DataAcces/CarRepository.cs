@@ -13,10 +13,11 @@ namespace DataAcces
 			_context = context;
 		}
 
-		public async Task Add(Car car)
+		public async Task<int> Add(Car car)
 		{
 			_context.Cars.Add(car);
 			await SaveChanges();
+			return car.Id;
 		}
 
 		public async Task Delete(Car car)

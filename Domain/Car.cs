@@ -12,9 +12,8 @@ namespace Domain
 		public float FuelConsumption { get; set; }
 		public CarClassE CarClass { get; set; }
 
-		public Car(int id, string brand, string model, int carAvaliable, float basePrice, float fuelConsumption, CarClassE carClass)
+		public Car(string brand, string model, int carAvaliable, float basePrice, float fuelConsumption, CarClassE carClass)
 		{
-			Id = id;
 			Brand = brand;
 			Model = model;
 			CarAvaliable = carAvaliable;
