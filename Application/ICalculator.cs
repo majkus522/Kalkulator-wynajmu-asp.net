@@ -6,6 +6,6 @@ namespace Application
 	{
 		public Task<Result> GetCars();
 		public Task<Result> Get(int id, InputData Data);
-		public Task AddCar(AddCarRequest car);
+		public Task<int> AddCar(AddCarRequest car);
 	}
 }

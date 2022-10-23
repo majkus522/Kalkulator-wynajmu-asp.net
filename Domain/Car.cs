@@ -12,15 +12,15 @@ namespace Domain
 		public float FuelConsumption { get; set; }
 		public CarClassE CarClass { get; set; }
 
-		public Car(AddCarRequest request, int id)
+		public Car(int id, string brand, string model, int carAvaliable, float basePrice, float fuelConsumption, CarClassE carClass)
 		{
 			Id = id;
-			Brand = request.Brand;
-			Model = request.Model;
-			CarAvaliable = request.CarAvaliable;
-			BasePrice = request.BasePrice;
-			FuelConsumption = request.FuelConsumption;
-			CarClass = request.CarClass;
+			Brand = brand;
+			Model = model;
+			CarAvaliable = carAvaliable;
+			BasePrice = basePrice;
+			FuelConsumption = fuelConsumption;
+			CarClass = carClass;
 		}
 
 		public Car() { }

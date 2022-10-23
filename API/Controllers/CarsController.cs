@@ -44,8 +44,8 @@ namespace API.Controllers
 		[HttpPost]
 		public async Task<ActionResult<Car>> AddCar(AddCarRequest Car)
 		{
-			await _calculator.AddCar(Car);
-			return CreatedAtAction(nameof(AddCar), Car);
+			int Id = await _calculator.AddCar(Car);
+			return CreatedAtAction(nameof(AddCar), new { id = Id }, Car);
 		}
 	}
 }

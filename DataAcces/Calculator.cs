@@ -88,16 +88,17 @@ namespace DataAcces
 			return new Result(200, result);
 		}
 
-		public async Task AddCar(AddCarRequest carRequest)
+		public async Task<int> AddCar(AddCarRequest carRequest)
 		{
 			int maxId = 0;
 			foreach(Car car in await _carRepository.GetAll())
 			{
 				maxId = Math.Max(maxId, car.Id);
 			}
-			await _carRepository.Add(new Car(carRequest, maxId + 1));
+			await _carRepository.Add(new Car(maxId + 1, carRequest.Brand, carRequest.Model, carRequest.CarAvaliable, carRequest.BasePrice, carRequest.FuelConsumption, carRequest.CarClass));
 			await _carRepository.SaveChanges();
-		}
+			return maxId + 1;
+        }
 
 		bool CarExists(int id)
 		{
