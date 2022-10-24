@@ -76,17 +76,19 @@ namespace DataAcces
 			return new Result(200, result);
 		}
 
-		public async Task<Result> GetCars()
+		public async Task<ICollection<Car>> GetCars()
 		{
-			var result = "Dostępne samochody:";
+			/*var result = "Dostępne samochody:";
 			int index = 1;
-			foreach (Car car in await _carRepository.GetAll())
+			foreach (Car car in await _carRepository.GetAll(_carRepository.Get_context()))
 			{
 				result += "\r\n" + index + ". " + car.Brand + " " + car.Model;
 				index++;
 			}
-			return new Result(200, result);
-		}
+			return new Result(200, result);*/
+			return await _carRepository.GetAll();
+
+        }
 
 		public async Task<int> AddCar(AddCarRequest carRequest)
 		{
