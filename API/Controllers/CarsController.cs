@@ -13,11 +13,11 @@ namespace API.Controllers
 	public class CarsController : ControllerBase
 	{
 		private readonly ICalculator _calculator;
-        private readonly IMediator _mediator;
+		private readonly IMediator _mediator;
 
-        public CarsController(DatabaseContext context, IMediator mediator)
+		public CarsController(DatabaseContext context, IMediator mediator)
 		{
-            _calculator = new Calculator(new CarRepository(context));
+			_calculator = new Calculator(new CarRepository(context));
 			_mediator = mediator;
 		}
 
@@ -28,14 +28,11 @@ namespace API.Controllers
 			HttpContext.Response.StatusCode = result.code;
 			return result.content;*/
 
-			var request = new GetAllCarsQuery()
-			{
-				calculator = _calculator
-			};
-            var result = await _mediator.Send(request);
+			var request = new GetAllCarsQuery();
+			var result = await _mediator.Send(request);
 
-            return result;
-        }
+			return result;
+		}
 
 		[HttpGet("{id}")]
 		public async Task<string> Get(int Id, [FromQuery] InputData Data)
