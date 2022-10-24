@@ -13,10 +13,9 @@ namespace DataAcces
 			_carRepository = carRepository;
 		}
 
-		public async Task<Result> Get(int id, InputData Data)
+		public async Task<Result> Get(Car car, InputData Data)
 		{
 			var result = "";
-			var car = await _carRepository.Get(id);
 			if (car == null)
 				return new Result(404, "");
 			result += car.Brand + " " + car.Model + "\r\n\r\n";
@@ -79,7 +78,7 @@ namespace DataAcces
 		public async Task<ICollection<Car>> GetCars()
 		{
 			return await _carRepository.GetAll();
-        }
+		}
 
 		public async Task<int> AddCar(AddCarRequest carRequest)
 		{
