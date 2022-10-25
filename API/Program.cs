@@ -3,8 +3,18 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CrasDB;Trusted_Connection=True;"));
+<<<<<<< Updated upstream
 //builder.Services.AddSingleton<ICalculator, Calculator>();
 //builder.Services.AddSingleton<ICarRepository, CarRepository>();
+=======
+
+builder.Services.AddTransient<ICarRepository, CarRepository>();
+builder.Services.AddTransient<ICarReservationService, CarReservationService>();
+
+builder.Services.AddMvc();
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+
+>>>>>>> Stashed changes
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

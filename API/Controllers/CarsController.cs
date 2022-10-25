@@ -33,6 +33,7 @@ namespace API.Controllers
 			return result.content;
 		}
 
+<<<<<<< Updated upstream
 		/*[HttpPut("{id}")]
 		public async Task<string> Put(int Id, Car Car)
 		{
@@ -40,6 +41,22 @@ namespace API.Controllers
 			HttpContext.Response.StatusCode = result.code;
 			return result.content;
 		}*/
+=======
+		[HttpPut("{id}")]
+		public async Task<string> PutReservation(int Id, [FromQuery] InputData Data)
+		{
+			Console.WriteLine("majkus522" + "{" + Id + ";" + Data.Start + ";" + Data.End + ";" + Data.Distance + ";" + Data.Year + "}");
+			var request = new CheckCarReservationQuery(Id, Data.Distance, Data.Year, Data.Start, Data.End);
+			var valid = await _mediator.Send(request);
+			if(valid)
+			{
+				var putRequest = new PutReservationCommand(Id, Data.Distance, Data.Year, Data.Start, Data.End);
+				await _mediator.Send(putRequest);
+				return "Dokonano rezerwacji.";
+			}
+			return "Brak dostepnych pojazdów w tym terminie.";
+		}
+>>>>>>> Stashed changes
 
 		[HttpPost]
 		public async Task<ActionResult<Car>> AddCar(AddCarRequest Car)

@@ -7,6 +7,7 @@ namespace DataAcces
 	public class DatabaseContext : DbContext
 	{
 		public DbSet<Car> Cars { get; set; }
+		public DbSet<CarReservation> Reservations { get; set; }
 
 		string connection = "Server=(localdb)\\mssqllocaldb;Database=CrasDB;Trusted_Connection=True;";
 
