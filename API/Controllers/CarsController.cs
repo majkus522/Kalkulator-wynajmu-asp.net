@@ -3,9 +3,15 @@ using DataAcces;
 using Domain;
 using Common;
 using Application;
-using API.Functions.Query;
 using MediatR;
-using API.Functions.Command;
+using Application.Cars.Commands;
+using Application.Cars.Queries;
+using Application.Cars.Requests;
+using Application.Repositories;
+using Application.Reservations.Commands;
+using DataAcces.EF;
+using DataAcces.Repositories;
+using Domain.Cars;
 
 namespace API.Controllers
 {
@@ -57,7 +63,7 @@ namespace API.Controllers
 			{
 				return "Dokonano rezerwacji.";
 			}
-			return "Brak dostepnych pojazdów w tym terminie.";
+			return "Brak dostepnych pojazd?w w tym terminie.";
 		}
 	}
 }
