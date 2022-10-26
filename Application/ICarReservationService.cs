@@ -1,9 +1,8 @@
-﻿using Common;
-
-namespace Application
+﻿namespace Application
 {
 	public interface ICarReservationService
 	{
-        public void AddReservation(int distance, int year, DateTime start, DateTime end);
+		public Task<bool> AddReservation(int distance, int year, DateTime start, DateTime end, int carId);
+		public Task<bool> CheckReservation(int distance, int year, DateTime start, DateTime end, int carId);
 	}
 }

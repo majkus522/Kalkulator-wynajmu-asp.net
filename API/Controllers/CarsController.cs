@@ -47,5 +47,17 @@ namespace API.Controllers
 			var Id = await _mediator.Send(request);
 			return CreatedAtAction(nameof(AddCar), new { id = Id }, Car);
 		}
+
+		[HttpPut("{id}")]
+		public async Task<string> PutReservation(int Id, [FromQuery] InputData Data)
+		{
+			var request = new PutReservationCommand(Id, Data.Distance, Data.Year, Data.Start, Data.End);
+			var valid = await _mediator.Send(request);
+			if (valid)
+			{
+				return "Dokonano rezerwacji.";
+			}
+			return "Brak dostepnych pojazdów w tym terminie.";
+		}
 	}
 }

@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CrasDB;Trusted_Connection=True;"));
 
 builder.Services.AddTransient<ICarRepository, CarRepository>();
+builder.Services.AddTransient<ICarReservationService, CarReservationService>();
 
 builder.Services.AddMvc();
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
