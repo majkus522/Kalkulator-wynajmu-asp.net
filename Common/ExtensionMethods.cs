@@ -1,24 +1,15 @@
 ﻿namespace Common
 {
-    public static class ExtensionMethods
+	public static class ExtensionMethods
 	{
-		public static float GetValue(this CarClassE carClass)
-		{
-			switch(carClass)
+		public static float GetValue(this CarClassE carClass) =>
+			carClass switch
 			{
-				case CarClassE.Basic:
-					return 1f;
-
-				case CarClassE.Standard:
-					return 1.3f;
-
-				case CarClassE.Medium:
-					return 1.6f;
-
-				case CarClassE.Premium:
-					return 2f;
-			}
-			return 0;
-		}
+				CarClassE.Basic => 1f,
+				CarClassE.Standard => 1.3f,
+				CarClassE.Medium => 1.6f,
+				CarClassE.Premium => 2f,
+				_ => throw new ArgumentException(message: "invalid enum value", paramName: nameof(carClass)),
+			};
 	}
 }

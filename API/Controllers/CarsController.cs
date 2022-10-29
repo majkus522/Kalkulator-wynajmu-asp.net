@@ -1,9 +1,11 @@
-ï»¿using DataAcces;
-using Domain;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Infrastructure;
+using DataAcces;
+using Domain;
 using Common;
+using Application;
+using API.Functions.Query;
+using MediatR;
+using API.Functions.Command;
 
 namespace API.Controllers
 {
@@ -11,45 +13,51 @@ namespace API.Controllers
 	[Route("api/kalkulator")]
 	public class CarsController : ControllerBase
 	{
-		readonly DatabaseContext context;
-		readonly ICalculator calculator;
+		private readonly ICalculator _calculator;
+		private readonly IMediator _mediator;
 
-		public CarsController(DatabaseContext context, ICalculator calculator)
+		public CarsController(DatabaseContext context, IMediator mediator)
 		{
-			this.context = context;
-			this.calculator = calculator;
+			_calculator = new Calculator(new CarRepository(context));
+			_mediator = mediator;
 		}
 
 		[HttpGet]
-		public async Task<string> getCars()
+		public async Task<ICollection<Car>> GetCars()
 		{
-			var result = calculator.getCars(context).Result;
-			HttpContext.Response.StatusCode = result.code;
-			return result.content;
+			var request = new GetAllCarsQuery();
+			var result = await _mediator.Send(request);
+			return result;
 		}
 
 		[HttpGet("{id}")]
-		public async Task<string> get(int id, [FromQuery] InputData Data)
+		public async Task<string> Get(int Id, [FromQuery] InputData Data)
 		{
-			var result = calculator.get(id, Data, context).Result;
-			HttpContext.Response.StatusCode = result.code;
-			return result.content;
-		}
-
-		[HttpPut("{id}")]
-		public async Task<string> put(int id, Car car)
-		{
-			var result = calculator.put(id, car, context).Result;
+			var request = new GetCarQuery(Id);
+			var car = await _mediator.Send(request);
+			var result = await _calculator.Get(car, Data);
 			HttpContext.Response.StatusCode = result.code;
 			return result.content;
 		}
 
 		[HttpPost]
-		[ActionName(nameof(PostCar))]
-		public async Task<ActionResult<Car>> PostCar(Car car)
+		public async Task<ActionResult<Car>> AddCar(AddCarRequest Car)
 		{
-			calculator.postCar(car, context);
-			return CreatedAtAction(nameof(PostCar), new { id = car.Id }, car);
+			var request = new AddCarCommand(Car);
+			var Id = await _mediator.Send(request);
+			return CreatedAtAction(nameof(AddCar), new { id = Id }, Car);
+		}
+
+		[HttpPut("{id}")]
+		public async Task<string> PutReservation(int Id, [FromQuery] InputData Data)
+		{
+			var request = new PutReservationCommand(Id, Data.Distance, Data.Year, Data.Start, Data.End);
+			var valid = await _mediator.Send(request);
+			if (valid)
+			{
+				return "Dokonano rezerwacji.";
+			}
+			return "Brak dostepnych pojazdów w tym terminie.";
 		}
 	}
 }

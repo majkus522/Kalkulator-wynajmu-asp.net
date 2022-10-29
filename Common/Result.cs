@@ -1,6 +1,6 @@
 ﻿namespace Common
 {
-    public class Result
+	public class Result
 	{
 		public int code;
 		public string content;

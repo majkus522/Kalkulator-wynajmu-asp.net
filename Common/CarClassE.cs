@@ -2,6 +2,6 @@
 {
 	public enum CarClassE
 	{
-		Basic = 5, Standard = 10, Medium = 15, Premium = 20
+		Basic = 10, Standard = 20, Medium = 30, Premium = 40
 	}
 }
