@@ -1,23 +1,22 @@
-﻿namespace Domain.Cars
+﻿using Domain.Cars.ValueObjects.Categories;
+using Domain.Cars.ValueObjects.Models;
+
+namespace Domain.Cars
 {
 	public class Car
 	{
 		public int Id { get; set; }
-		public string Brand { get; set; } = null!;
-		public string Model { get; set; } = null!;
-		public int CarAvaliable { get; set; }
 		public float BasePrice { get; set; }
 		public float FuelConsumption { get; set; }
 		public CarClassE CarClass { get; set; }
+		public Model Model { get; set; }
 
-		public Car(string brand, string model, int carAvaliable, float basePrice, float fuelConsumption, CarClassE carClass)
+		public Car(float basePrice, float fuelConsumption, CarClassE carClass, Model model)
 		{
-			Brand = brand;
-			Model = model;
-			CarAvaliable = carAvaliable;
 			BasePrice = basePrice;
 			FuelConsumption = fuelConsumption;
 			CarClass = carClass;
+			Model = model;
 		}
 
 		public Car() { }
